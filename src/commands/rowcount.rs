@@ -12,7 +12,7 @@ pub struct RowCountCommandArgs {
     files: Vec<PathBuf>,
 }
 
-pub(crate) fn execute(opts: RowCountCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: RowCountCommandArgs) -> Result<(), PQRSError> {
     debug!("The file names to read are: {:?}", opts.files);
 
     // make sure all files are present before printing any data

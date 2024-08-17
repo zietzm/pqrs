@@ -20,7 +20,7 @@ pub struct SizeCommandArgs {
     files: Vec<PathBuf>,
 }
 
-pub(crate) fn execute(opts: SizeCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: SizeCommandArgs) -> Result<(), PQRSError> {
     debug!("The file names to read are: {:?}", opts.files);
 
     // make sure all files are present before printing any data

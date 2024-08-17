@@ -1,13 +1,13 @@
 use crate::errors::PQRSError;
 use crate::errors::PQRSError::{FileExists, FileNotFound};
 use crate::utils::{check_path_present, get_row_batches, open_file};
-use parquet::arrow::ArrowWriter;
-use clap::Parser;
 use arrow::datatypes::Schema;
+use clap::Parser;
 use log::debug;
+use parquet::arrow::ArrowWriter;
 use std::fs::File;
-use std::sync::Arc;
 use std::path::PathBuf;
+use std::sync::Arc;
 
 /// Merge file(s) into another parquet file
 #[derive(Parser, Debug)]
@@ -21,7 +21,7 @@ pub struct MergeCommandArgs {
     output: PathBuf,
 }
 
-pub(crate) fn execute(opts: MergeCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: MergeCommandArgs) -> Result<(), PQRSError> {
     debug!("The file names to read are: {:?}", opts.input);
     debug!("The file name to write to: {}", opts.output.display());
 
@@ -46,7 +46,8 @@ pub(crate) fn execute(opts: MergeCommandArgs) -> Result<(), PQRSError> {
 
         let schema_without_metadata = Schema::new(fields);
 
-        let mut writer = ArrowWriter::try_new(file, Arc::new(schema_without_metadata), None)?;
+        let mut writer =
+            ArrowWriter::try_new(file, Arc::new(schema_without_metadata), None)?;
 
         for record_batch in data.batches.iter() {
             writer.write(record_batch)?;
@@ -54,7 +55,6 @@ pub(crate) fn execute(opts: MergeCommandArgs) -> Result<(), PQRSError> {
 
         writer
     };
-
 
     for input in &opts.input[1..] {
         let current = open_file(input)?;

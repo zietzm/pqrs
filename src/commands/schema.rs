@@ -90,7 +90,7 @@ fn get_message(metadata: &ParquetMetaData) -> Result<String, PQRSError> {
     Ok(String::from_utf8(bytes)?)
 }
 
-pub(crate) fn execute(opts: SchemaCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: SchemaCommandArgs) -> Result<(), PQRSError> {
     debug!("The file names to read are: {:?}", opts.files);
     debug!("Print Detailed output: {}", opts.detailed);
 
@@ -110,12 +110,14 @@ pub(crate) fn execute(opts: SchemaCommandArgs) -> Result<(), PQRSError> {
                     // returns a arrow_schema::Schema
                     // but only arrow::datatypes::Schema is json serializable?
                     let arrow_schema = parquet_to_arrow_schema(
-                        parquet_reader.metadata().file_metadata().schema_descr(), None
-                    ).unwrap();
-                    let arrow_schema_json = serde_json::to_string_pretty(&arrow_schema).unwrap();
+                        parquet_reader.metadata().file_metadata().schema_descr(),
+                        None,
+                    )
+                    .unwrap();
+                    let arrow_schema_json =
+                        serde_json::to_string_pretty(&arrow_schema).unwrap();
                     println!("{}", arrow_schema_json);
                 } else {
-
                     let metadata = parquet_reader.metadata();
                     if opts.json {
                         let schema = ParquetSchema {

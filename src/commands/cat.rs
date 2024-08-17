@@ -27,7 +27,7 @@ pub struct CatCommandArgs {
     locations: Vec<PathBuf>,
 }
 
-pub(crate) fn execute(opts: CatCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: CatCommandArgs) -> Result<(), PQRSError> {
     let format = if opts.json {
         Formats::Json
     } else if opts.csv_no_header {

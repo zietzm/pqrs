@@ -1,10 +1,7 @@
 use clap::{Parser, Subcommand};
 
-use crate::errors::PQRSError;
-
-mod commands;
-mod errors;
-mod utils;
+use pqrs::commands;
+use pqrs::errors::PQRSError;
 
 #[derive(Subcommand, Debug)]
 enum Commands {

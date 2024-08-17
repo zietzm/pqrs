@@ -20,7 +20,7 @@ pub struct SampleCommandArgs {
     file: PathBuf,
 }
 
-pub(crate) fn execute(opts: SampleCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: SampleCommandArgs) -> Result<(), PQRSError> {
     let format = if opts.json {
         Formats::Json
     } else {

@@ -24,7 +24,7 @@ pub struct HeadCommandArgs {
     file: PathBuf,
 }
 
-pub(crate) fn execute(opts: HeadCommandArgs) -> Result<(), PQRSError> {
+pub fn execute(opts: HeadCommandArgs) -> Result<(), PQRSError> {
     let format = if opts.json {
         Formats::Json
     } else if opts.csv {
